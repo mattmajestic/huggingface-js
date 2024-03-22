@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { signInAnonymously, auth, db, storage } from './firebase-config';
+import { signInAnonymously, auth, db } from './firebase-config';
 import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 function App() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const [file, setFile] = useState(null); // State to hold the selected file
 
   useEffect(() => {
+    // Authenticate the user anonymously
     signInAnonymously(auth).catch(console.error);
 
+    // Listen for new messages
     const messagesQuery = query(collection(db, "messages"), orderBy("timestamp"));
     const unsubscribe = onSnapshot(messagesQuery, (querySnapshot) => {
       const fetchedMessages = querySnapshot.docs.map(doc => ({
@@ -26,69 +26,43 @@ function App() {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    if (!newMessage.trim() && !file) return;
-
+    if (!newMessage.trim()) return;
+  
     try {
       await addDoc(collection(db, "messages"), {
         text: newMessage,
         timestamp: serverTimestamp(),
       });
-      setNewMessage(''); // Clear the message input field
+      setNewMessage(''); // Attempt to clear the input field
+      // Manually clear the input field as a last resort
+      document.getElementById("messageInput").value = '';
     } catch (error) {
       console.error("Error sending message: ", error);
     }
   };
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      uploadFile(selectedFile); // Call uploadFile here
-    }
-  };
-  
-
-  // Adjusted uploadFile to optionally accept a file parameter
-  const uploadFile = async (selectedFile = file) => {
-    if (!selectedFile) return;
-
-    try {
-      const fileRef = ref(storage, `uploads/${selectedFile.name}`);
-      const snapshot = await uploadBytes(fileRef, selectedFile);
-      const fileUrl = await getDownloadURL(snapshot.ref);
-      console.log("File uploaded:", fileUrl); // Here you might want to do something with the file URL
-      setFile(null); // Clear the file state after upload
-    } catch (error) {
-      console.error("Error uploading file: ", error);
-    }
-  };
-
   return (
-    <div className="chat-container">
-      <div className="chat-box">
-        <div className="messages">
+    <div className="app-container">
+      <h1>Majestic Coding Firebase Chat</h1>
+      <div className="chat-container">
+        <div className="chat-box">
           {messages.map(message => (
-            <div key={message.id} className="message">{message.text}</div>
+            <div key={message.id} className="message" style={{ animation: 'fadeIn 0.5s' }}>
+              {message.text}
+            </div>
           ))}
-        </div>
-        <form onSubmit={sendMessage} className="message-form">
-          {/* Updated Attach Button and File Input */}
-          <label htmlFor="file-input" className="attach-button">📎</label>
+          <form onSubmit={sendMessage} className="message-form">
           <input
-            id="file-input"
-            type="file"
-            onChange={handleFileChange}
-            style={{ display: 'none' }}
-          />
-          <input
+            id="messageInput"
             type="text"
             className="message-input"
             placeholder="Type a message..."
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
           />
-          <button type="submit" className="send-button">Send</button>
-        </form>
+            <button type="submit" className="send-button">Send</button>
+          </form>
+        </div>
       </div>
     </div>
   );

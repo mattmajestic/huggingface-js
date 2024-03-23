@@ -40,9 +40,6 @@ function Chat() {
 
   return (
     <div className="app-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', height: '100vh', padding: '20px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-        <h2>Firebase Chat</h2>
-      </div>
       <div style={{ width: '50%',  marginBottom: '20px', backgroundColor: 'grey', padding: '20px', borderRadius: '10px' }}>
         {messages.map((message, index) => (
           <div key={index} style={{ textAlign: message.position, fontSize: '24px', margin: '10px 0', color: 'white' }}>

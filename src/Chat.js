@@ -20,9 +20,16 @@ function Chat() {
 
   const handleClick = async () => {
     const response = await query({ "inputs": input });
-    const generated_text = response[0].generated_text.replace(/\\/g, '').split('\n').map((line, index) => <div key={index}>{line}</div>);
-    setMessages([...messages, { text: input, position: 'right' }, { text: generated_text, position: 'left' }]);
+    const words = response[0].generated_text.replace(/\\/g, '').split(' ');
+    const generated_text = [];
+    for (let i = 0; i < words.length; i += 3) {
+      generated_text.push(words.slice(i, i + 3).join(' '));
+    }
+    setMessages([...messages, { text: input, position: 'right' }]);
     setInput('');
+    setTimeout(() => {
+      setMessages(prevMessages => [...prevMessages, { text: generated_text.join('\n'), position: 'left' }]);
+    }, 1500); // 1.5 seconds delay
   };
 
   const handleKeyPress = (event) => {

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { TextField, Button, List, ListItem, ListItemText, Paper, IconButton, InputAdornment } from '@material-ui/core';
 import { FaPaperclip } from 'react-icons/fa';
 
 const API_URL = "https://api-inference.huggingface.co/models/gpt2";
@@ -39,45 +38,36 @@ function Chat() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', height: '100vh', padding: '20px' }}>
-      <Paper style={{ width: '50%',  marginBottom: '20px', padding: '20px', borderRadius: '10px' }}>
-        <List>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
+      <div className="w-full max-w-lg bg-gray-800 rounded-xl shadow-md p-6 mb-4 flex flex-col">
+        <div className="overflow-auto flex-grow mb-4">
           {messages.map((message, index) => (
-            <ListItem key={index} style={{ justifyContent: message.position === 'right' ? 'flex-end' : 'flex-start' }}>
-              <ListItemText primary={message.text} />
-            </ListItem>
+            <div key={index} className={`text-left ${message.position === 'right' ? 'text-right' : ''}`}>
+              <p className={`inline-block p-2 rounded-lg mb-2 ${message.position === 'right' ? 'bg-blue-500 text-white' : 'bg-gray-700 text-white'}`}>{message.text}</p>
+            </div>
           ))}
-        </List>
-      </Paper>
-      <div style={{ width: '50%', display: 'flex', alignItems: 'center' }}>
-        <TextField
-          id="file-upload"
-          type="file"
-          accept=".csv,audio/*"
-          onChange={handleFileUpload}
-          style={{ display: 'none' }}
-        />
-        <label htmlFor="file-upload">
-          <IconButton color="primary" component="span">
-            <FaPaperclip size={30} />
-          </IconButton>
-        </label>
-        <TextField
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyPress={handleKeyPress}
-          style={{ flex: 1, marginRight: '10px' }}
-          variant="outlined"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <Button onClick={handleClick} color="primary" variant="contained">
-                  Send
-                </Button>
-              </InputAdornment>
-            ),
-          }}
-        />
+        </div>
+        <div className="flex items-center">
+          <input
+            id="file-upload"
+            type="file"
+            accept=".csv,audio/*"
+            onChange={handleFileUpload}
+            className="hidden"
+          />
+          <label htmlFor="file-upload" className="mr-2">
+            <FaPaperclip size={30} className="text-blue-500 cursor-pointer" />
+          </label>
+          <input
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyPress={handleKeyPress}
+            className="flex-grow mr-2 p-2 rounded border border-gray-600 text-white bg-gray-700"
+          />
+          <button onClick={handleClick} className="py-2 px-4 rounded bg-blue-500 text-white">
+            Send
+          </button>
+        </div>
       </div>
     </div>
   );

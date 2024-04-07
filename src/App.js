@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
+import { Container, Typography, Box } from '@material-ui/core';
 import { signInAnonymously, auth, db } from './firebase-config';
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import Chat from './Chat'; // assuming Chat.js is in the same directory
@@ -26,14 +26,14 @@ function App() {
   }, []);
 
   return (
-    <div className="app-container">
-      <h1>Majestic Coding Firebase Chat</h1>
-      <div className="chat-container">
-        <div className="chat-box">
-          <Chat messages={messages} setMessages={setMessages} newMessage={newMessage} setNewMessage={setNewMessage} />
-        </div>
-      </div>
-    </div>
+    <Container maxWidth="md">
+      <Box my={4}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Majestic Coding Firebase Chat
+        </Typography>
+        <Chat messages={messages} setMessages={setMessages} newMessage={newMessage} setNewMessage={setNewMessage} />
+      </Box>
+    </Container>
   );
 }
 

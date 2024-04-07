@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import { TextField, Button, List, ListItem, ListItemText, Paper, IconButton, InputAdornment } from '@material-ui/core';
 import { FaPaperclip } from 'react-icons/fa';
 
 const API_URL = "https://api-inference.huggingface.co/models/gpt2";
@@ -39,21 +39,45 @@ function Chat() {
   };
 
   return (
-    <div className="app-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', height: '100vh', padding: '20px' }}>
-      <div style={{ width: '50%',  marginBottom: '20px', backgroundColor: 'grey', padding: '20px', borderRadius: '10px' }}>
-        {messages.map((message, index) => (
-          <div key={index} style={{ textAlign: message.position, fontSize: '24px', margin: '10px 0', color: 'white' }}>
-            {message.text}
-          </div>
-        ))}
-      </div>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', height: '100vh', padding: '20px' }}>
+      <Paper style={{ width: '50%',  marginBottom: '20px', padding: '20px', borderRadius: '10px' }}>
+        <List>
+          {messages.map((message, index) => (
+            <ListItem key={index} style={{ justifyContent: message.position === 'right' ? 'flex-end' : 'flex-start' }}>
+              <ListItemText primary={message.text} />
+            </ListItem>
+          ))}
+        </List>
+      </Paper>
       <div style={{ width: '50%', display: 'flex', alignItems: 'center' }}>
-        <label htmlFor="file-upload" style={{ cursor: 'pointer', marginRight: '10px' }}>
-          <FaPaperclip size={30} />
+        <TextField
+          id="file-upload"
+          type="file"
+          accept=".csv,audio/*"
+          onChange={handleFileUpload}
+          style={{ display: 'none' }}
+        />
+        <label htmlFor="file-upload">
+          <IconButton color="primary" component="span">
+            <FaPaperclip size={30} />
+          </IconButton>
         </label>
-        <input id="file-upload" type="file" accept=".csv,audio/*" onChange={handleFileUpload} style={{ display: 'none' }} />
-        <input type="text" value={input} onChange={e => setInput(e.target.value)} onKeyPress={handleKeyPress} style={{ flex: 1, height: '50px', fontSize: '18px', marginRight: '10px' }} />
-        <button onClick={handleClick} style={{ height: '70px', fontSize: '24px' }}>Send</button>
+        <TextField
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyPress={handleKeyPress}
+          style={{ flex: 1, marginRight: '10px' }}
+          variant="outlined"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button onClick={handleClick} color="primary" variant="contained">
+                  Send
+                </Button>
+              </InputAdornment>
+            ),
+          }}
+        />
       </div>
     </div>
   );

@@ -1,4 +1,6 @@
-# 🤖 huggingface-js 🤖
+# HuggingfaceJS React chatbot on Firebase 🤖
+
+<a href="https://github.com/sponsors/mattmajestic"><img src="https://img.shields.io/badge/Sponsor-GitHub-black?style=for-the-badge&logo=github" alt="Sponsor me on GitHub"></a>
 
 Welcome to `huggingface-js`, a simple, yet powerful chatbot built with React and powered by Hugging Face's GPT-2 model. Using Firebase for real-time updates and easy deployment. 
 

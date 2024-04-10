@@ -1,3 +1,60 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+/* Base styles for the markdown container */
+.markdown-body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    max-width: 650px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  /* Styling headings */
+  .markdown-body h1, .markdown-body h2 {
+    color: #2a6496; /* A nice blue */
+    border-bottom: 1px solid #eee; /* Adds a subtle line below headings */
+    padding-bottom: 10px; /* Adds some space below the heading text */
+  }
+  
+  .markdown-body h1 {
+    font-size: 28px;
+  }
+  
+  .markdown-body h2 {
+    font-size: 24px;
+    margin-top: 20px; /* Adds more space above h2 headings */
+  }
+  
+  /* Styling links */
+  .markdown-body a {
+    color: #d14; /* A reddish color for links */
+    text-decoration: none; /* Removes underline from links */
+  }
+  
+  .markdown-body a:hover {
+    text-decoration: underline; /* Adds underline on hover for better visibility */
+  }
+  
+  /* Styling lists */
+  .markdown-body ul {
+    padding-left: 20px; /* Indents lists */
+  }
+  
+  .markdown-body li {
+    margin-bottom: 5px; /* Adds space between list items */
+  }
+  
+  /* Optional: Styling code */
+  .markdown-body code {
+    font-family: monospace;
+    background-color: #f7f7f7;
+    padding: 2px 4px;
+    border-radius: 4px;
+    border: 1px solid #e1e1e8;
+  }
+  

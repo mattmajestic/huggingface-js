@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { signInAnonymously, auth, db } from './firebase-config';
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import './App.css';
-import Chat from './Chat'; // assuming Chat.js is in the same directory
+import Chat from './Chat';
+import Navbar from './Navbar';
+import Docs from './Docs';
 
 function App() {
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState('');
 
   useEffect(() => {
     // Authenticate the user anonymously
@@ -26,12 +28,15 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200 text-gray-800 p-4">
-      <h1 className="text-4xl mb-4">Majestic Coding Chat</h1>
-      <div className={`w-full max-w-lg bg-white rounded-xl shadow-md p-6 mb-4 overflow-auto max-h-[80vh]`}>
-        <Chat messages={messages} setMessages={setMessages} newMessage={newMessage} setNewMessage={setNewMessage} />
+    <Router>
+      <Navbar />
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200 text-gray-800 p-4">
+        <Routes>
+          <Route path="/" element={<Docs />} />
+          <Route path="/chat" element={<Chat messages={messages} setMessages={setMessages} />} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 }
 

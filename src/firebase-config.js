@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, signInAnonymously as firebaseSignInAnonymously } from "firebase/auth";
+import { getAuth, signInWithPopup, GithubAuthProvider } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
@@ -21,6 +21,10 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
 
-const signInAnonymously = () => firebaseSignInAnonymously(auth);
+// Create a GitHub auth provider instance
+const githubProvider = new GithubAuthProvider();
 
-export { db, auth, signInAnonymously, storage };
+// Function to sign in with GitHub
+const signInWithGithub = () => signInWithPopup(auth,githubProvider);
+
+export { db, auth, signInWithGithub, storage };

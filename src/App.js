@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { signInAnonymously, auth, db } from './firebase-config';
+import { db } from './firebase-config';
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import './App.css';
 import Chat from './Chat';
@@ -11,9 +11,6 @@ function App() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    // Authenticate the user anonymously
-    signInAnonymously(auth).catch(console.error);
-
     // Listen for new messages
     const messagesQuery = query(collection(db, "messages"), orderBy("timestamp"));
     const unsubscribe = onSnapshot(messagesQuery, (querySnapshot) => {

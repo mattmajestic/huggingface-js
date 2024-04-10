@@ -6,7 +6,7 @@ function Navbar() {
     <nav className="bg-gray-800 text-white p-6"> {/* Increased padding for a taller navbar */}
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-xl font-semibold"> {/* Increased text size */}
-          Majestic Coding Chat
+          HuggingfaceJS
         </div>
         <div className="flex gap-4 text-lg"> {/* Increased text size for links */}
           <a href="/" className="hover:text-gray-300 flex items-center">
@@ -17,7 +17,7 @@ function Navbar() {
           </a>
           {/* Adding the GitHub link with an icon */}
           <a href="https://github.com/mattmajestic/huggingface-js" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 flex items-center">
-            <FaGithub className="mr-2" />GitHub {/* Added icon */}
+            <FaGithub className="mr-2" /> {/* Added icon */}
           </a>
         </div>
       </div>
